@@ -4,8 +4,10 @@ if (!process.env.NODE_ENV) {
 }
 
 var Koa = require('koa')
-var middleware = require('koa-webpack')
+var Router = require('koa-router')
+var send = require('koa-send')
 var path = require('path')
+var middleware = require('koa-webpack')
 var webpack = require('webpack')
 var webpackConfig = require('./webpack.dev.conf')
 
@@ -13,13 +15,18 @@ var webpackConfig = require('./webpack.dev.conf')
 var port = process.env.PORT || config.dev.port
 
 const app = new Koa();
+const router = new Router();
 const compiler = webpack(webpackConfig)
 
+router.redirect('/*', '/');
+
 app.use(middleware({
-  compiler: compiler
-}))
+    compiler: compiler
+  }))
+  .use(router.routes())
+  .use(router.allowedMethods())
 
 var uri = 'http://localhost:' + port
 
 app.listen(port)
-console.log(`fuckyou: ${uri}`)
+console.log(`Listening on: ${uri}`)
