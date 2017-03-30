@@ -1,7 +1,7 @@
 <template>
-  <div class="hello">
+  <div class="hello1">
     <h1>{{ msg }}</h1>
-    <h2>我我我3</h2>
+    <h2>我我我123</h2>
     <ul>
       <li><a href="https://vuejs.org" target="_blank">你好</a></li>
       <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'hello',
+  name: 'hello1',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'

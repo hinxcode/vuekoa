@@ -1,32 +1,49 @@
-var config = require('../config')
+const config = require('../config')
+
 if (!process.env.NODE_ENV) {
   process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 }
 
-var Koa = require('koa')
-var Router = require('koa-router')
-var send = require('koa-send')
-var path = require('path')
-var middleware = require('koa-webpack')
-var webpack = require('webpack')
-var webpackConfig = require('./webpack.dev.conf')
+const Koa = require('koa')
+const Router = require('koa-router')
+const serve = require('koa-static')
+const mountHtml = require('koa-mount-html')
+// var session = require('koa-session')
+const path = require('path')
+const middleware = require('koa-webpack')
+const webpack = require('webpack')
+const webpackConfig = require('./webpack.dev.conf')
+// const webpackDevMiddleware = require('webpack-dev-middleware')
+const mount = require('koa-mount');
 
 // default port where dev server listens for incoming traffic
-var port = process.env.PORT || config.dev.port
+const port = process.env.PORT || config.dev.port
 
 const app = new Koa();
 const router = new Router();
 const compiler = webpack(webpackConfig)
+const publicPath = webpackConfig.output.publicPath
 
-router.redirect('/*', '/');
+router.get('/a', (ctx, next) => {
+  
+})
 
-app.use(middleware({
-    compiler: compiler
-  }))
+// app.use(mountHtml(async (ctx, next) => {
+//   await send(ctx, '/index.html', { root: __dirname + '/static' });
+// }, { defer: true }))
+
+// app.use(mountHtml(
+//   publicPath, webpackDevMiddleware(compiler)
+// ))
+
+app
   .use(router.routes())
   .use(router.allowedMethods())
-
-var uri = 'http://localhost:' + port
+  .use(serve('static'))
+  .use(middleware({
+    compiler: compiler
+  }))
 
 app.listen(port)
-console.log(`Listening on: ${uri}`)
+
+console.log(`http://localhost:${port}`)
