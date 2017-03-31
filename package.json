@@ -1,9 +1,8 @@
 {
   "name": "vuekoa",
   "version": "1.0.0",
-  "description": "A Vue.js project with koa2",
+  "description": "A Vue.js practice with koa2",
   "author": "",
-  "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
@@ -32,10 +31,8 @@
     "html-webpack-harddisk-plugin": "^0.1.0",
     "html-webpack-plugin": "^2.28.0",
     "koa": "^2.1.0",
-    "koa-mount": "^3.0.0",
-    "koa-mount-html": "^0.1.2",
+    "koa-rewrite": "^2.1.0",
     "koa-router": "^7.0.1",
-    "koa-send": "^3.3.0",
     "koa-session": "^5.0.0",
     "koa-static": "^3.0.0",
     "koa-webpack": "^0.3.1",
