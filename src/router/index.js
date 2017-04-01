@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import LoginForm from '@/components/LoginForm'
 import TestForm from '@/components/TestForm'
-import ErrorPageComponent from '@/components/NotFoundComponent'
+import ErrorPageComponent from '@/components/ErrorPage'
 
 Vue.use(Router)
 

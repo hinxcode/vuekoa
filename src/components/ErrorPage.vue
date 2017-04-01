@@ -1,6 +1,8 @@
 <template>
   <div class="NotFound">
-    <h1>{{ msg }}</h1>
+    <img height="100" src="../assets/logo.png" />
+    <h1>404</h1>
+    <h2>{{ msg }}</h2>
   </div>
 </template>
 
@@ -17,21 +19,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+h1 {
+  font-weight: 100;
+  font-size: 11em;
+  line-height: 1em;
+  margin-top: 15px;
+  margin-bottom: 50px;
 }
-
-ul {
-  list-style-type: none;
-  padding: 0;
+h2 {
+  font-weight: 100;
 }
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
+div {
+  text-align: center;
 }
 </style>
