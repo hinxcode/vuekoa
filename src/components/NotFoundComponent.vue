@@ -1,15 +1,15 @@
 <template>
-  <div class="hello1">
+  <div class="NotFound">
     <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'hello1',
+  name: 'NotFound',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Oops! The page you visited does not exist.'
     }
   }
 }

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import LoginForm from '@/components/LoginForm'
 import TestForm from '@/components/TestForm'
+import ErrorPageComponent from '@/components/NotFoundComponent'
 
 Vue.use(Router)
 
@@ -15,6 +16,10 @@ export default new Router({
     {
       path: '/test',
       component: TestForm
+    },
+    {
+      path: '*',
+      component: ErrorPageComponent
     }
   ]
 })

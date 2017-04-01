@@ -5,13 +5,13 @@ if (!process.env.NODE_ENV) {
 }
 const port = process.env.PORT || config.dev.port
 
+const path = require('path')
 const Koa = require('koa')
 const Router = require('koa-router')
 const serve = require('koa-static')
-const rewrite = require('koa-rewrite')
 // var session = require('koa-session')
-const path = require('path')
-const middleware = require('koa-webpack')
+const koaMiddleware = require('koa-webpack')
+const historyMiddleWare = require('connect-history-api-fallback')
 const webpack = require('webpack')
 const webpackConfig = require('./webpack.dev.conf')
 
@@ -19,18 +19,20 @@ const app = new Koa();
 const router = new Router();
 const compiler = webpack(webpackConfig)
 
-router.get('/api', async (ctx, next) => {
+router.get('/api/test', async (ctx, next) => {
   await next()
+  console.log('api: ' + 'test')
 })
 
 app
-  .use(
-    rewrite('/test', '/')
-  )
   .use(router.routes())
   .use(router.allowedMethods())
-  .use(serve('static'))
-  .use(middleware({
+  .use((ctx, next) => {
+    historyMiddleWare()(ctx, null, () => {})
+    return next()
+  })
+  // .use(serve('static'))
+  .use(koaMiddleware({
     compiler: compiler
   }))
 
