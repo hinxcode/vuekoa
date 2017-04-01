@@ -1,7 +1,8 @@
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
-var vueLoaderConfig = require('./vue-loader.conf')
+
+var env = process.env.NODE_ENV === config.prod.env ? 'prod' : 'dev'
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -12,9 +13,9 @@ module.exports = {
     app: './src/main.js'
   },
   output: {
-    path: config.build.assetsRoot,
+    path: config.prod.assetsRoot,
     filename: '[name].js',
-    publicPath: config.dev.assetsPublicPath
+    publicPath: config[env].assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -37,7 +38,12 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: vueLoaderConfig
+        options: {
+          loaders: utils.styleLoaders({
+            sourceMap: config[env].cssSourceMap,
+            extract: config[env].extractText
+          })
+        }
       },
       {
         test: /\.js$/,

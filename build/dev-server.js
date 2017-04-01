@@ -5,12 +5,9 @@ if (!process.env.NODE_ENV) {
 }
 const port = process.env.PORT || config.dev.port
 
-const path = require('path')
 const Koa = require('koa')
 const Router = require('koa-router')
-const serve = require('koa-static')
-// var session = require('koa-session')
-const koaMiddleware = require('koa-webpack')
+const webpackMiddleware = require('koa-webpack')
 const historyMiddleWare = require('connect-history-api-fallback')
 const webpack = require('webpack')
 const webpackConfig = require('./webpack.dev.conf')
@@ -31,8 +28,7 @@ app
     historyMiddleWare()(ctx, null, () => {})
     return next()
   })
-  // .use(serve('static'))
-  .use(koaMiddleware({
+  .use(webpackMiddleware({
     compiler: compiler
   }))
 

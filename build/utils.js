@@ -1,8 +1,13 @@
 var path = require('path')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+
 var config = require('../config')
 
 exports.assetsPath = function (_path) {
-  var assetsSubDirectory = config.dev.assetsSubDirectory
+  var assetsSubDirectory = process.env.NODE_ENV === config.prod.env
+    ? config.prod.assetsSubDirectory
+    : config.dev.assetsSubDirectory
+
   return path.posix.join(assetsSubDirectory, _path)
 }
 
@@ -12,14 +17,15 @@ exports.cssLoaders = function (options) {
   var cssLoader = {
     loader: 'css-loader',
     options: {
-      minimize: process.env.NODE_ENV === 'production',
-      sourceMap: options.sourceMap
+      minimize: process.env.NODE_ENV === config.prod.env,
+      sourceMap: options.sourceMap,
+      extract: options.extract
     }
   }
 
-  // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
     var loaders = [cssLoader]
+
     if (loader) {
       loaders.push({
         loader: loader + '-loader',
@@ -29,10 +35,15 @@ exports.cssLoaders = function (options) {
       })
     }
 
-    return ['vue-style-loader'].concat(loaders)
+    if (options.extract) {
+      return ExtractTextPlugin.extract({
+        use: ['vue-style-loader'].concat(loaders)
+      })
+    } else {
+      return ['vue-style-loader'].concat(loaders)
+    }
   }
 
-  // http://vuejs.github.io/vue-loader/en/configurations/extract-css.html
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
@@ -44,10 +55,10 @@ exports.cssLoaders = function (options) {
   }
 }
 
-// Generate loaders for standalone style files (outside of .vue)
 exports.styleLoaders = function (options) {
   var output = []
   var loaders = exports.cssLoaders(options)
+
   for (var extension in loaders) {
     var loader = loaders[extension]
     output.push({
@@ -55,5 +66,6 @@ exports.styleLoaders = function (options) {
       use: loader
     })
   }
+
   return output
 }
