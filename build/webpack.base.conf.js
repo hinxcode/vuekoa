@@ -13,8 +13,6 @@ module.exports = {
     app: './src/main.js'
   },
   output: {
-    path: config.prod.assetsRoot,
-    filename: '[name].js',
     publicPath: config[env].assetsPublicPath
   },
   resolve: {

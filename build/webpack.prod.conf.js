@@ -8,9 +8,9 @@ var utils = require('./utils')
 var config = require('../config')
 var baseWebpackConfig = require('./webpack.base.conf')
 
-Object.keys(baseWebpackConfig.entry).forEach(function (name) {
-  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
-})
+// Object.keys(baseWebpackConfig.entry).forEach(function (name) {
+//   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
+// })
 
 module.exports = merge(baseWebpackConfig, {
   devtool: config.prod.cssSourceMap ? '#source-map' : false,
@@ -29,7 +29,7 @@ module.exports = merge(baseWebpackConfig, {
     new OptimizeCSSPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'index.html',
+      template: 'src/index.html',
       inject: true,
       minify: {
         removeComments: true,
